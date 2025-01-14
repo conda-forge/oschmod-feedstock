@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/oschmod-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/oschmod-{{ version }}.tar.gz
   sha256: bec99216f31615ee653b2a5c87cacfb4e4b6184c0e9f71da186300dacae974f3
 
 build:
@@ -15,14 +15,15 @@ build:
     - oschmod = oschmod.cli:main
     - ochmod = oschmod.cli:main
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip
+    - setuptools
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - pywin32-on-windows
 
 test:
@@ -34,6 +35,7 @@ test:
     - ochmod --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/yakdriver/oschmod
